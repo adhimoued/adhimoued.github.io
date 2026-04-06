@@ -3,32 +3,36 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Data Portfolio | Analytics Pro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Adhim OUEDRAOGO | Data Analyst & MEAL Specialist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
             --bg:        #0d0f14;
             --surface:   #161920;
+            --surface-2: #1e222a;
             --border:    rgba(255,255,255,0.08);
-            --accent:    #c8f04a; /* Ton vert néon */
-            --text:      #f5f5f7; /* Blanc cassé Apple */
-            --muted:     #86868b; /* Gris Apple */
+            --accent:    #c8f04a;
+            --accent-dark: #a0c83a;
+            --text:      #f5f5f7;
+            --muted:     #86868b;
             --glow:      rgba(200,240,74,0.12);
+            --card-hover: #1f2530;
         }
 
         html, body {
             height: 100%;
             background: var(--bg);
             color: var(--text);
-            /* Pile de polices système Apple/Windows */
-            font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
         }
 
-        /* ── Grain overlay discret ── */
+        /* Grain overlay */
         body::before {
             content: '';
             position: fixed; inset: 0;
@@ -38,28 +42,29 @@
             z-index: 1000;
         }
 
-        /* ── Header ── */
+        /* Header */
         header {
-            padding: 1.5rem 3rem;
+            padding: 1.2rem 3rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid var(--border);
-            background: rgba(13, 15, 20, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(13, 15, 20, 0.85);
+            backdrop-filter: blur(12px);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         .logo-text {
-            font-weight: 600;
-            font-size: 1.1rem;
+            font-weight: 700;
+            font-size: 1.2rem;
             letter-spacing: -0.02em;
-            color: #fff;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
-
-        .logo-text span { color: var(--accent); }
 
         .badge {
             display: flex;
@@ -82,53 +87,222 @@
             box-shadow: 0 0 8px var(--accent);
         }
 
-        /* ── Hero Section ── */
-        .hero {
-            max-width: 1200px;
+        /* Main layout */
+        .main-grid {
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 4rem 3rem 2rem;
-            text-align: center;
+            padding: 2rem 2rem 3rem;
+            display: flex;
+            gap: 2rem;
         }
 
-        .hero-eyebrow {
-            font-size: 0.75rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
+        /* Sidebar profil */
+        .profile-sidebar {
+            width: 320px;
+            flex-shrink: 0;
+        }
+
+        .profile-card {
+            background: var(--surface);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            position: sticky;
+            top: 90px;
+            transition: transform 0.2s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(200,240,74,0.3);
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #1a1f2a, #0d0f14);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Fallback si pas d'image */
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            padding: 1.5rem;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .profile-title {
             color: var(--accent);
-            font-weight: 600;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.03em;
             margin-bottom: 1rem;
         }
 
-        .hero-title {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: 1.5rem;
-            color: #fff;
-        }
-
-        .hero-sub {
-            font-size: 1.1rem;
+        .profile-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
             color: var(--muted);
-            max-width: 600px;
-            margin: 0 auto 3rem;
-            line-height: 1.6;
         }
 
-        /* ── Dashboard Container ── */
+        .profile-detail i {
+            width: 20px;
+            color: var(--accent);
+        }
+
+        .profile-detail a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .profile-detail a:hover {
+            color: var(--accent);
+        }
+
+        .skills-list {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: rgba(200,240,74,0.1);
+            border: 1px solid rgba(200,240,74,0.2);
+            padding: 0.25rem 0.7rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .section-mini {
+            margin-top: 1.2rem;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+        }
+
+        .section-mini h4 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .exp-item {
+            font-size: 0.75rem;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        /* Contenu principal */
+        .content-area {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Menu miniatures Power BI */
+        .projects-menu {
+            background: var(--surface);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .menu-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .thumbnails-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .thumbnail-card {
+            background: var(--surface-2);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            overflow: hidden;
+        }
+
+        .thumbnail-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .thumbnail-card.active {
+            border-color: var(--accent);
+            background: rgba(200,240,74,0.05);
+            box-shadow: 0 0 12px rgba(200,240,74,0.2);
+        }
+
+        .thumbnail-img {
+            width: 100%;
+            height: 100px;
+            background: #0d0f14;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .thumbnail-info {
+            padding: 0.8rem;
+        }
+
+        .thumbnail-title {
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .thumbnail-desc {
+            font-size: 0.65rem;
+            color: var(--muted);
+        }
+
+        /* Dashboard frame */
         .dashboard-container {
-            max-width: 1200px;
-            margin: 0 auto 4rem;
-            padding: 0 2rem;
+            width: 100%;
         }
 
         .dashboard-frame {
             background: var(--surface);
-            border-radius: 20px;
+            border-radius: 24px;
             border: 1px solid var(--border);
             overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4), 0 0 100px rgba(200,240,74,0.05);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
         }
 
         .chrome-bar {
@@ -148,16 +322,15 @@
         .report-title-display {
             flex: 1;
             text-align: center;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--muted);
-            font-weight: 400;
+            font-weight: 500;
         }
 
-        /* iFrame responsive */
         .iframe-wrapper {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%; /* Ratio 16:9 */
+            padding-bottom: 56.25%;
             height: 0;
             background: #000;
         }
@@ -169,40 +342,120 @@
             border: none;
         }
 
-        /* ── Footer ── */
         footer {
             text-align: center;
-            padding: 3rem;
+            padding: 2rem;
             border-top: 1px solid var(--border);
             color: var(--muted);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
-        @media (max-width: 768px) {
-            header, .hero, .dashboard-container { padding-left: 1.5rem; padding-right: 1.5rem; }
+        @media (max-width: 900px) {
+            .main-grid {
+                flex-direction: column;
+            }
+            .profile-sidebar {
+                width: 100%;
+            }
+            .profile-card {
+                position: relative;
+                top: 0;
+            }
+            header {
+                padding: 1rem 1.5rem;
+            }
+            .main-grid {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-text">Data<span>Specialist</span></div>
-        <div class="header-meta">
-            <div class="badge">
-                <span class="dot"></span>
-                Portfolio Interactif
+<header>
+    <div class="logo-text">Adhim<span> Analytics</span></div>
+    <div class="header-meta">
+        <div class="badge">
+            <span class="dot"></span>
+            MEAL · Data Science · Power BI
+        </div>
+    </div>
+</header>
+
+<div class="main-grid">
+    <!-- SIDEBAR PROFIL -->
+    <aside class="profile-sidebar">
+        <div class="profile-card">
+            <div class="profile-image" id="profile-img-container">
+                <!-- Image placeholder - remplacez 'mon-profil.jpg' par le chemin de votre photo -->
+                <img src="https://via.placeholder.com/400x400/1a1f2a/86868b?text=Photo+Adhim" alt="Photo de profil" id="profile-img">
+            </div>
+            <div class="profile-info">
+                <h2 class="profile-name">OUEDRAOGO Abdel Latif Adhim Filiga</h2>
+                <div class="profile-title">Data Analyst · MEAL Specialist</div>
+                
+                <div class="profile-detail">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Burkina Faso, Ouagadougou</span>
+                </div>
+                <div class="profile-detail">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:ouedsma@gmail.com">ouedsma@gmail.com</a>
+                </div>
+                <div class="profile-detail">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>+226 76-68-66-07</span>
+                </div>
+                <div class="profile-detail">
+                    <i class="fab fa-linkedin"></i>
+                    <a href="https://www.linkedin.com/in/adhim-ouedraogo-577bb7191" target="_blank">linkedin.com/in/adhim-ouedraogo</a>
+                </div>
+                
+                <div class="skills-list">
+                    <span class="skill-tag">Power BI</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">SQL Server</span>
+                    <span class="skill-tag">MEAL</span>
+                    <span class="skill-tag">KoboToolbox</span>
+                    <span class="skill-tag">Excel Avancé</span>
+                </div>
+
+                <div class="section-mini">
+                    <h4><i class="fas fa-graduation-cap"></i> Formation</h4>
+                    <div class="exp-item"><strong>Master II Gestion de Projets</strong> - Université Aube Nouvelle (en cours)</div>
+                    <div class="exp-item"><strong>Licence Sociologie du développement</strong> - UCAO, Bobo Dioulasso</div>
+                </div>
+
+                <div class="section-mini">
+                    <h4><i class="fas fa-briefcase"></i> Expérience clé</h4>
+                    <div class="exp-item"><strong>Assistant Suivi-Evaluation</strong> - Projet PONASI (2025–auj.)</div>
+                    <div class="exp-item"><strong>Analyste de données</strong> - TRANSSION Holdings (2024-2025)</div>
+                    <div class="exp-item"><strong>Formateur Excel & Développeur</strong> - Freelance</div>
+                </div>
+
+                <div class="section-mini">
+                    <h4><i class="fas fa-language"></i> Langues</h4>
+                    <div class="exp-item">Français (courant) · Anglais (écrit & parlé)</div>
+                </div>
             </div>
         </div>
-    </header>
+    </aside>
 
-    <main>
-        <section class="hero">
-            <p class="hero-eyebrow">Business Intelligence & Strategy</p>
-            <h1 class="hero-title">Décoder la donnée,<br>piloter la performance.</h1>
-            <p class="hero-sub">Expertise en Power BI, SQL et Python pour transformer vos indicateurs bruts en leviers de croissance stratégiques.</p>
-        </section>
+    <!-- CONTENU PRINCIPAL : MINIATURES + POWER BI -->
+    <div class="content-area">
+        <!-- Menu des miniatures Power BI -->
+        <div class="projects-menu">
+            <div class="menu-title">
+                <i class="fas fa-chart-line"></i> Tableaux de bord Power BI
+                <span style="font-size:0.7rem;">— Cliquez pour visualiser</span>
+            </div>
+            <div class="thumbnails-grid" id="thumbnails-grid">
+                <!-- Les miniatures seront générées dynamiquement avec JS -->
+            </div>
+        </div>
 
-        <section class="dashboard-container">
+        <!-- Zone d'affichage Power BI -->
+        <div class="dashboard-container">
             <div class="dashboard-frame">
                 <div class="chrome-bar">
                     <div class="chrome-dot dot-1"></div>
@@ -210,7 +463,6 @@
                     <div class="chrome-dot dot-3"></div>
                     <div class="report-title-display" id="current-title">Analyse Financière Globale</div>
                 </div>
-                
                 <div class="iframe-wrapper">
                     <iframe 
                         id="main-report"
@@ -219,12 +471,172 @@
                     </iframe>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
+</div>
 
-    <footer>
-        &copy; 2026 — Déployé avec soin sur GitHub Pages
-    </footer>
+<footer>
+    <i class="fas fa-chart-simple"></i> Automatisation MEAL & Data-driven insights — Burkina Faso, 2026
+</footer>
 
+<script>
+    // ============================================================
+    // LISTE DES PROJETS POWER BI (miniatures + URL)
+    // Ajoutez ici vos propres rapports Power BI publiés
+    // ============================================================
+    const powerBiProjects = [
+        {
+            id: 1,
+            title: "Analyse Financière Globale",
+            description: "KPIs financiers & prévisions",
+            icon: "💰",
+            embedUrl: "https://app.powerbi.com/view?r=eyJrIjoiYTc5NTAxMWEtYWYwNC00NjE3LWJiZDAtMThjOTJmZWI5N2I3IiwidCI6IjkwYzcwYWNkLWZhZWEtNDYwYS04OTM5LTYyYmFlYTI3ZDYyOSJ9"
+        },
+        {
+            id: 2,
+            title: "Suivi des Ventes Smartphones",
+            description: "Performance INFINIX & TECNO",
+            icon: "📱",
+            embedUrl: "https://app.powerbi.com/view?r=eyJrIjoiZDNhYzI0MjMtYzRkYi00YzA5LWE0ZTAtN2FhMjFhZTU1N2EwIiwidCI6IjkwYzcwYWNkLWZhZWEtNDYwYS04OTM5LTYyYmFlYTI3ZDYyOSJ9"
+        },
+        {
+            id: 3,
+            title: "Suivi-Evaluation PONASI",
+            description: "Indicateurs projet / Kobotoolbox",
+            icon: "🌿",
+            embedUrl: "https://app.powerbi.com/view?r=eyJrIjoiZjU2YjU0YzctMjA3ZS00Y2Q5LTk5ZDktZDAwZjViNmQzYzJmIiwidCI6IjkwYzcwYWNkLWZhZWEtNDYwYS04OTM5LTYyYmFlYTI3ZDYyOSJ9"
+        },
+        {
+            id: 4,
+            title: "Conflits Homme-Faune (CHF)",
+            description: "Analyse stratégique & hotspots",
+            icon: "🐘",
+            embedUrl: "https://app.powerbi.com/view?r=eyJrIjoiYWNhZDE5MmQtMGVlZC00YzE5LTkzZGYtZTU4MGVkYjE5ZDYyIiwidCI6IjkwYzcwYWNkLWZhZWEtNDYwYS04OTM5LTYyYmFlYTI3ZDYyOSJ9"
+        },
+        {
+            id: 5,
+            title: "Dashboard Stock & Activations",
+            description: "TRANSSION Holdings Burkina",
+            icon: "📊",
+            embedUrl: "https://app.powerbi.com/view?r=eyJrIjoiOWU0NzQ5ZTAtYzE3Yi00YTM2LTg0YzAtZmU4MTU2YzU0MTU0IiwidCI6IjkwYzcwYWNkLWZhZWEtNDYwYS04OTM5LTYyYmFlYTI3ZDYyOSJ9"
+        }
+    ];
+
+    // fallback : si certains URLs ne sont pas valides, on garde le premier par défaut
+    // (vous devez remplacer ces URLs par vos propres rapports Power BI publiés "Publier sur le web")
+    
+    // Pour l'exemple, j'ai mis des exemples d'URLs fictifs mais structurés.
+    // Pour un vrai projet, remplacez par vos propres embed codes.
+    // Si vous n'avez pas encore 5 rapports, vous pouvez dupliquer ou commenter.
+    
+    // VARIABLE : récupération des éléments
+    const thumbnailGrid = document.getElementById('thumbnails-grid');
+    const mainIframe = document.getElementById('main-report');
+    const titleDisplay = document.getElementById('current-title');
+    
+    // fonction pour générer les miniatures
+    function renderThumbnails() {
+        thumbnailGrid.innerHTML = '';
+        powerBiProjects.forEach(project => {
+            const card = document.createElement('div');
+            card.className = 'thumbnail-card';
+            card.setAttribute('data-id', project.id);
+            card.setAttribute('data-url', project.embedUrl);
+            card.setAttribute('data-title', project.title);
+            
+            // Miniature visuelle simplifiée (icône + texte)
+            card.innerHTML = `
+                <div class="thumbnail-img">
+                    <span style="font-size: 2.2rem;">${project.icon}</span>
+                </div>
+                <div class="thumbnail-info">
+                    <div class="thumbnail-title">${project.title}</div>
+                    <div class="thumbnail-desc">${project.description}</div>
+                </div>
+            `;
+            
+            card.addEventListener('click', () => {
+                // Changer l'iframe
+                mainIframe.src = project.embedUrl;
+                titleDisplay.innerText = project.title;
+                // Mettre à jour l'état actif visuel
+                document.querySelectorAll('.thumbnail-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+            });
+            
+            thumbnailGrid.appendChild(card);
+        });
+        
+        // Activer la première carte par défaut
+        if (thumbnailGrid.firstChild) {
+            thumbnailGrid.firstChild.classList.add('active');
+        }
+    }
+    
+    // Initialisation
+    renderThumbnails();
+    
+    // Optionnel : gestion d'erreur si iframe ne charge pas
+    // (mais ce n'est pas nécessaire)
+    
+    // ============================================================
+    // GESTION DE LA PHOTO DE PROFIL
+    // ============================================================
+    // Pour insérer votre photo, remplacez l'URL ci-dessous par le chemin de votre image.
+    // Si vous avez une image dans le même dossier que ce fichier : "profile.jpg"
+    // Sinon vous pouvez utiliser un lien direct ou une image base64.
+    // Exemple : 
+    //   document.getElementById('profile-img').src = "mon-profil.jpg";
+    // 
+    // Pour que ce soit parfait, déposez votre photo (ex: adhim_photo.jpg) dans le repo GitHub
+    // et décommentez la ligne ci-dessous.
+    
+    const userPhotoPath = "adhim_profile.jpg";  // <--- CHANGEZ ICI avec le nom de votre fichier photo
+    const imgElement = document.getElementById('profile-img');
+    
+    // Test si l'image existe, sinon laisser le placeholder
+    // Mais on tente de charger l'image personnalisée
+    const testImage = new Image();
+    testImage.onload = () => {
+        imgElement.src = userPhotoPath;
+    };
+    testImage.onerror = () => {
+        // l'image n'existe pas, on garde le placeholder mais on peut afficher une icône ou initiales
+        console.log("Photo personnelle non trouvée, utilisation du placeholder. Déposez votre photo à la racine ou modifiez 'userPhotoPath'.");
+        // option: on peut afficher un fond avec initiales
+        const container = document.querySelector('.profile-image');
+        if(container && imgElement.src.includes('placeholder')) {
+            // On pourrait faire un style différent, mais le placeholder reste lisible
+        }
+    };
+    testImage.src = userPhotoPath;
+    
+    // Petit ajustement pour montrer que vous pouvez aussi mettre un avatar si besoin:
+    // Si vous voulez une vraie photo, renommez votre fichier en "adhim_photo.jpg" et mettez-le dans le même dossier.
+    
+    // Note : si vous utilisez GitHub Pages, vérifiez le chemin (respecte la casse)
+    
+    // Pour une intégration plus robuste, voici un exemple d'utilisation d'une image par défaut venant du CV :
+    // Vous pouvez également encoder l'image en base64 si vous voulez un fichier html unique.
+    // Mais l'idéal : placer une photo dans le dossier et décommenter la ligne ci-dessous tout en commentant le testImage.
+    // document.getElementById('profile-img').src = "photo_adhim.jpg";
+    
+    // Affichage des informations complémentaires depuis le CV (déjà présent)
+    
+    // Amélioration : gestion des URLs de Power BI dynamique et message si aucun rapport
+    if(powerBiProjects.length === 0) {
+        thumbnailGrid.innerHTML = '<div style="padding:1rem; text-align:center; color:var(--muted)">Ajoutez vos rapports Power BI dans le tableau "powerBiProjects"</div>';
+    }
+</script>
+
+<!-- Instructions d'utilisation pour l'utilisateur :
+     1. Remplacez les URLs Power BI dans le tableau "powerBiProjects" par les vôtres.
+        Pour obtenir un lien Power BI Embed : 
+        - Dans Power BI Service > Fichier > Publier sur le web > Copier le lien "embed".
+     2. Pour la photo : déposez un fichier JPG/PNG (ex: adhim_profile.jpg) dans le dossier du site,
+        puis modifiez la variable `userPhotoPath` avec le bon nom.
+     3. Le CV est déjà intégré dans la partie profil (expérience, compétences...)
+     4. Tous les projets miniatures sont cliquables et affichent le dashboard en plein écran.
+-->
 </body>
 </html>
