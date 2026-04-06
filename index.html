@@ -1,474 +1,230 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard Analytics</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Data Portfolio | Analytics Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --bg:        #0a0c10;
-      --surface:   #111318;
-      --border:    rgba(255,255,255,0.07);
-      --accent:    #c8f04a;
-      --accent2:   #4af0c8;
-      --text:      #e8eaf0;
-      --muted:     #6b7080;
-      --glow:      rgba(200,240,74,0.18);
-    }
+        :root {
+            --bg:        #0d0f14;
+            --surface:   #161920;
+            --border:    rgba(255,255,255,0.08);
+            --accent:    #c8f04a; /* Ton vert néon */
+            --text:      #f5f5f7; /* Blanc cassé Apple */
+            --muted:     #86868b; /* Gris Apple */
+            --glow:      rgba(200,240,74,0.12);
+        }
 
-    html, body {
-      height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      overflow-x: hidden;
-    }
+        html, body {
+            height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            /* Pile de polices système Apple/Windows */
+            font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    /* ── Grain overlay ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.025;
-      pointer-events: none;
-      z-index: 1000;
-    }
+        /* ── Grain overlay discret ── */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+            opacity: 0.02;
+            pointer-events: none;
+            z-index: 1000;
+        }
 
-    /* ── Layout ── */
-    .page {
-      min-height: 100vh;
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-    }
+        /* ── Header ── */
+        header {
+            padding: 1.5rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background: rgba(13, 15, 20, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    /* ── Header ── */
-    header {
-      padding: 2rem 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-      animation: fadeDown 0.8s cubic-bezier(.16,1,.3,1) both;
-    }
+        .logo-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
 
-    header::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 3rem;
-      width: 80px; height: 2px;
-      background: var(--accent);
-      border-radius: 2px;
-    }
+        .logo-text span { color: var(--accent); }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.8rem;
+            border-radius: 100px;
+        }
 
-    .logo-mark {
-      width: 36px; height: 36px;
-      border-radius: 8px;
-      background: var(--accent);
-      display: grid;
-      place-items: center;
-    }
+        .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+        }
 
-    .logo-mark svg { width: 20px; height: 20px; }
+        /* ── Hero Section ── */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 3rem 2rem;
+            text-align: center;
+        }
 
-    .logo-text {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: -0.02em;
-      color: #fff;
-    }
+        .hero-eyebrow {
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
 
-    .logo-text span { color: var(--accent); }
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
 
-    .header-meta {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
+        .hero-sub {
+            font-size: 1.1rem;
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
 
-    .badge {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.72rem;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      padding: 0.35rem 0.75rem;
-      border-radius: 100px;
-    }
+        /* ── Dashboard Container ── */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+        }
 
-    .dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 6px var(--accent);
-      animation: pulse 2s ease-in-out infinite;
-    }
+        .dashboard-frame {
+            background: var(--surface);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4), 0 0 100px rgba(200,240,74,0.05);
+        }
 
-    /* ── Hero ── */
-    .hero {
-      padding: 3.5rem 3rem 2rem;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: end;
-      gap: 2rem;
-      animation: fadeUp 0.9s 0.1s cubic-bezier(.16,1,.3,1) both;
-    }
+        .chrome-bar {
+            background: rgba(255,255,255,0.03);
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
 
-    .hero-eyebrow {
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-    }
+        .chrome-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-1 { background: #ff5f57; }
+        .dot-2 { background: #febc2e; }
+        .dot-3 { background: #28c840; }
 
-    .hero-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      color: #fff;
-    }
+        .report-title-display {
+            flex: 1;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-weight: 400;
+        }
 
-    .hero-title em {
-      font-style: normal;
-      color: var(--accent);
-    }
+        /* iFrame responsive */
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* Ratio 16:9 */
+            height: 0;
+            background: #000;
+        }
 
-    .hero-sub {
-      margin-top: 0.85rem;
-      font-size: 0.95rem;
-      color: var(--muted);
-      font-weight: 300;
-      max-width: 480px;
-      line-height: 1.65;
-    }
+        .iframe-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
 
-    .hero-stats {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.4rem;
-    }
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 3rem;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
 
-    .stat {
-      text-align: right;
-    }
-
-    .stat-value {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: #fff;
-      line-height: 1;
-    }
-
-    .stat-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .divider { width: 1px; height: 40px; background: var(--border); }
-
-    /* ── Dashboard frame ── */
-    .dashboard-wrapper {
-      padding: 0 3rem 3rem;
-      animation: fadeUp 1s 0.2s cubic-bezier(.16,1,.3,1) both;
-    }
-
-    .dashboard-frame {
-      position: relative;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.04),
-        0 40px 80px rgba(0,0,0,0.6),
-        0 0 80px var(--glow);
-    }
-
-    /* Top bar chrome */
-    .chrome-bar {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.85rem 1.25rem;
-      border-bottom: 1px solid var(--border);
-      background: rgba(255,255,255,0.02);
-    }
-
-    .chrome-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-    }
-    .chrome-dot:nth-child(1) { background: #ff5f57; }
-    .chrome-dot:nth-child(2) { background: #febc2e; }
-    .chrome-dot:nth-child(3) { background: #28c840; }
-
-    .chrome-url {
-      flex: 1;
-      margin-left: 0.5rem;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.3rem 0.75rem;
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.02em;
-    }
-
-    .chrome-actions {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .chrome-btn {
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      padding: 0.28rem 0.65rem;
-      border-radius: 4px;
-      cursor: pointer;
-      background: none;
-      transition: all 0.2s;
-      text-decoration: none;
-    }
-    .chrome-btn:hover {
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-
-    /* iFrame */
-    .pbi-iframe {
-      width: 100%;
-      height: 70vh;
-      min-height: 520px;
-      border: none;
-      display: block;
-      background: var(--surface);
-    }
-
-    /* Loading state */
-    .iframe-loader {
-      position: absolute;
-      inset: 45px 0 0 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      background: var(--surface);
-      transition: opacity 0.5s;
-      pointer-events: none;
-    }
-
-    .iframe-loader.hidden { opacity: 0; }
-
-    .spinner {
-      width: 32px; height: 32px;
-      border: 2px solid var(--border);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-
-    .loader-text {
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    /* ── Footer ── */
-    footer {
-      padding: 1.5rem 3rem;
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      animation: fadeUp 1s 0.3s cubic-bezier(.16,1,.3,1) both;
-    }
-
-    .footer-left {
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-    }
-
-    .footer-left strong { color: var(--text); font-weight: 400; }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    .footer-links a {
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: var(--accent); }
-
-    /* ── Decorative corner accent ── */
-    .corner-accent {
-      position: fixed;
-      top: 0; right: 0;
-      width: 300px; height: 300px;
-      background: radial-gradient(circle at top right, rgba(200,240,74,0.06), transparent 70%);
-      pointer-events: none;
-    }
-
-    /* ── Keyframes ── */
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.3; }
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 768px) {
-      header, .hero, .dashboard-wrapper, footer {
-        padding-left: 1.25rem;
-        padding-right: 1.25rem;
-      }
-      .hero { grid-template-columns: 1fr; }
-      .hero-stats { flex-direction: row; align-items: center; }
-      .divider { width: 40px; height: 1px; }
-      .stat { text-align: left; }
-      .pbi-iframe { min-height: 380px; height: 60vh; }
-      .footer-links { display: none; }
-      .chrome-url { display: none; }
-    }
-  </style>
+        @media (max-width: 768px) {
+            header, .hero, .dashboard-container { padding-left: 1.5rem; padding-right: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
 
-<div class="corner-accent"></div>
-
-<div class="page">
-
-  <!-- ── Header ── -->
-  <header>
-    <div class="logo">
-      <div class="logo-mark">
-        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="10" width="4" height="8" rx="1" fill="#0a0c10"/>
-          <rect x="8" y="6" width="4" height="12" rx="1" fill="#0a0c10"/>
-          <rect x="14" y="2" width="4" height="16" rx="1" fill="#0a0c10"/>
-        </svg>
-      </div>
-      <span class="logo-text">Data<span>View</span></span>
-    </div>
-    <div class="header-meta">
-      <div class="badge">
-        <span class="dot"></span>
-        Live · Power BI
-      </div>
-    </div>
-  </header>
-
-  <!-- ── Main content ── -->
-  <main>
-    <!-- Hero -->
-    <div class="hero">
-      <div>
-        <p class="hero-eyebrow">Tableau de bord interactif</p>
-        <h1 class="hero-title">Analyse &amp; <em>Insights</em><br/>en temps réel</h1>
-        <p class="hero-sub">Explorez les données de façon interactive. Filtrez, segmentez et plongez dans les indicateurs clés directement depuis cette interface.</p>
-      </div>
-      <div class="hero-stats">
-        <div class="stat">
-          <div class="stat-value">Power BI</div>
-          <div class="stat-label">Plateforme</div>
+    <header>
+        <div class="logo-text">Data<span>Specialist</span></div>
+        <div class="header-meta">
+            <div class="badge">
+                <span class="dot"></span>
+                Portfolio Interactif
+            </div>
         </div>
-        <div class="divider"></div>
-        <div class="stat">
-          <div class="stat-value">Live</div>
-          <div class="stat-label">Statut</div>
-        </div>
-      </div>
-    </div>
+    </header>
 
-    <!-- Dashboard -->
-    <div class="dashboard-wrapper">
-      <div class="dashboard-frame">
-        <!-- Browser chrome -->
-        <div class="chrome-bar">
-          <div class="chrome-dot"></div>
-          <div class="chrome-dot"></div>
-          <div class="chrome-dot"></div>
-          <div class="chrome-url">app.powerbi.com · Rapport sécurisé</div>
-          <div class="chrome-actions">
-            <a class="chrome-btn" href="https://app.powerbi.com/view?r=eyJrIjoiYTc5NTAxMWEtYWYwNC00NjE3LWJiZDAtMThjOTJmZWI5N2I3IiwidCI6IjkwYzcwYWNkLWZhZWEtNDYwYS04OTM5LTYyYmFlYTI3ZDYyOSJ9" target="_blank" rel="noopener">Ouvrir ↗</a>
-          </div>
-        </div>
+    <main>
+        <section class="hero">
+            <p class="hero-eyebrow">Business Intelligence & Strategy</p>
+            <h1 class="hero-title">Décoder la donnée,<br>piloter la performance.</h1>
+            <p class="hero-sub">Expertise en Power BI, SQL et Python pour transformer vos indicateurs bruts en leviers de croissance stratégiques.</p>
+        </section>
 
-        <!-- Loader -->
-        <div class="iframe-loader" id="loader">
-          <div class="spinner"></div>
-          <p class="loader-text">Chargement du rapport…</p>
-        </div>
+        <section class="dashboard-container">
+            <div class="dashboard-frame">
+                <div class="chrome-bar">
+                    <div class="chrome-dot dot-1"></div>
+                    <div class="chrome-dot dot-2"></div>
+                    <div class="chrome-dot dot-3"></div>
+                    <div class="report-title-display" id="current-title">Analyse Financière Globale</div>
+                </div>
+                
+                <div class="iframe-wrapper">
+                    <iframe 
+                        id="main-report"
+                        src="https://app.powerbi.com/view?r=eyJrIjoiYTc5NTAxMWEtYWYwNC00NjE3LWJiZDAtMThjOTJmZWI5N2I3IiwidCI6IjkwYzcwYWNkLWZhZWEtNDYwYS04OTM5LTYyYmFlYTI3ZDYyOSJ9" 
+                        allowFullScreen="true">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+    </main>
 
-        <!-- Power BI embed -->
-        <iframe
-          class="pbi-iframe"
-          src="https://app.powerbi.com/view?r=eyJrIjoiYTc5NTAxMWEtYWYwNC00NjE3LWJiZDAtMThjOTJmZWI5N2I3IiwidCI6IjkwYzcwYWNkLWZhZWEtNDYwYS04OTM5LTYyYmFlYTI3ZDYyOSJ9"
-          title="Rapport Power BI"
-          allowfullscreen
-          onload="document.getElementById('loader').classList.add('hidden')"
-        ></iframe>
-      </div>
-    </div>
-  </main>
-
-  <!-- ── Footer ── -->
-  <footer>
-    <p class="footer-left">
-      Propulsé par <strong>Microsoft Power BI</strong> · Données mises à jour automatiquement
-    </p>
-    <nav class="footer-links">
-      <a href="https://app.powerbi.com/view?r=eyJrIjoiYTc5NTAxMWEtYWYwNC00NjE3LWJiZDAtMThjOTJmZWI5N2I3IiwidCI6IjkwYzcwYWNkLWZhZWEtNDYwYS04OTM5LTYyYmFlYTI3ZDYyOSJ9" target="_blank" rel="noopener">Plein écran</a>
-      <a href="mailto:">Contact</a>
-    </nav>
-  </footer>
-
-</div>
+    <footer>
+        &copy; 2026 — Déployé avec soin sur GitHub Pages
+    </footer>
 
 </body>
 </html>
